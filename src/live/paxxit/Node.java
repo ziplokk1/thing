@@ -12,35 +12,29 @@ public class Node <T> {
     private T data;
     private Node next;
     private Node previous;
-    private HashMap<Integer, Node> index;
+    private int size;
 
     public Node(T data) {
-        this.index = new HashMap<Integer, Node>();
+        this.size = 1;
         this.data = data;
-        this.index.put(0, this);
-
         this.next = null;
         this.previous = null;
     }
 
-    public Node(T data, HashMap<Integer, Node> idx) {
-        this.index = idx;
+    /**
+     *
+     * @param data The node contents.
+     * @param idx The starting index of this node.
+     */
+    public Node(T data, int idx) {
+        this.size = idx;
         this.data = data;
         this.next = null;
         this.previous = null;
     }
 
     public int size() {
-        return this.index.size();
-    }
-
-    /**
-     * Add a node after this one.
-     *
-     * @param node The hasNext node in the linked list.
-     */
-    public boolean add(Node node) {
-        return add(node, this.index);
+        return this.size;
     }
 
     /**
@@ -53,82 +47,52 @@ public class Node <T> {
      * then add the node there and update the index.
      *
      * @param node The hasNext node in the linked list.
-     * @param index A HashMap instance that is shared from the root node.
      */
-    public boolean add(Node node, HashMap<Integer, Node> index) {
-        // my brain is not working yet...
-        // i woke up like right before i started streaming.
+    public boolean add(Node node) {
+        this.size += 1;
 
         // from the perspective of the root node,
         // when calling add, it should recursively go to
         // the next node until it reaches the end,
         // then add the node there and update the index.
-
-        // lol, it wont build because of the lifecycle of the test
-        // having to pass before the build succeeds.
         if (this.hasNext()) {
-            return this.next.add(node, index);
+            return this.next.add(node);
         } else {
             this.next = node;
-            index.put(index.size(), node);
         }
         this.next.setPrevious(this);
         return true;
     }
 
-    /**
-     * Delete this node from the linked list.
-     *
-     * This node should be deleted but not break the links between the other nodes.
-     */
-    public void remove() {
-        // if this node has a previous node, then link the previous node to this nodes hasNext node.
-        if (this.hasPrevious() && this.hasNext()) {
-            // simply adding our hasNext node should overwrite the reference to `this` node, removing the link and
-            // effectively deleting this node.
-//            this.previous.add(this.next);
+    private void setNext(Node n) {
+        this.next = n;
+    }
+
+    private void unlink() {
+        if (!this.hasNext()) {
+            this.previous.setNext(null);
+            return;
         }
-        // now lets figure out what to do if there's no previous node.
+        // 82% line coverage is good enough.
+        this.previous.setNext(this.getNext());
     }
 
     public void remove(int idx) {
         if (idx > this.size() - 1) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        // be back soon!
-        //
-        // if this node is the last node in the chain
-        // then we just delete the reference to it from the previous
-        // node.
-        if (!this.hasNext()) {
-            this.previous.setPrevious(null);
-            this.index.remove(idx);
-        }
-    }
 
-    /**
-     * Add a node before this one.
-     * @param node The node to add before this one in the linked list.
-     */
-    public void addBefore(Node node) {
-        // so you could get cheaty and return the node that was just added
-        // but I like to make things difficult. So lets pretend that we don't
-        // have a reference to the node outside of the root node.
-        this.previous = node;
+        Node n = this;
+        for (int i = 0; i < idx; i++) {
+            n = n.getNext();
+        }
+        n.unlink();
+        this.size -= 1;
     }
 
     public boolean hasNext() {
         // i feel like this is wrong. but i will look up the correct way to do it in a bit.
         return this.next != null;
-    }
-
-    public boolean hasPrevious() {
-        // same here. something about using a comparator against null seems wrong.
-
-        // if you're curious as to why i'm skeptical, it's because null is nothing. a black void.
-        // you cant compare something to nothing because if something exists, then it obviously doesn't NOT exist.
-        // again, i'm super rusty with java, so this may be okay. \shrug
-        return this.previous != null;
     }
 
     // -------------------------
@@ -168,3 +132,5 @@ public class Node <T> {
         return sb.toString();
     }
 }
+
+// nice

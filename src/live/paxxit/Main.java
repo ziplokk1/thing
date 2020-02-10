@@ -2,14 +2,6 @@ package live.paxxit;
 
 import live.paxxit.Node;
 
-class X {
-
-    @Override
-    public String toString() {
-        return "This is type X";
-    }
-}
-
 /**
  * Our goal is to create a doubly linked list without actually implementing the List interface.
  */
@@ -33,7 +25,6 @@ public class Main {
     public void run() {
         Node<String> root = new Node<String>("I am root");
         root.add(new Node<Integer>(3));
-        root.add(new Node<X>(new X()));
 
         // hasNext up, we're going to create a `delete` method in the node.
         // this method should delete a node without breaking the links.

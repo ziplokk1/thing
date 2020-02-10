@@ -56,9 +56,10 @@ public class TestNode {
     public void testRemoveLastNode() {
         Node<String> root = new Node<String>("Root Node");
         for (int i = 0; i < 6; i++) {
-            root.add(new Node<String>(String.format("Node %d", i+2)));
+            root.add(new Node<String>(String.format("Node %d", i+1)));
         }
         root.remove(6);
         Assert.assertEquals(6, root.size());
+        Assert.assertEquals("Root Node -> Node 1 -> Node 2 -> Node 3 -> Node 4 -> Node 5", root.toString());
     }
 }
