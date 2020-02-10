@@ -4,13 +4,23 @@
   <artifactId>thingy</artifactId>
   <version>alpha-1.0</version>
   <modelVersion>4.0.0</modelVersion>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
+  <dependencies>
+    <!-- Quick restart of intellij to apply the environment changes -->
+    <!-- https://mvnrepository.comR/artifact/junit/junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.9</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>${project.basedir}/src</sourceDirectory>
+    <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
+  </build>
 </project>
