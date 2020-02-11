@@ -1,8 +1,5 @@
 package live.paxxit;
 
-import java.util.HashMap;
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * This will be the object which will contain pointers back to itself so that we have a reference
  * to the hasNext elements in the list.
@@ -16,18 +13,6 @@ public class Node <T> {
 
     public Node(T data) {
         this.size = 1;
-        this.data = data;
-        this.next = null;
-        this.previous = null;
-    }
-
-    /**
-     *
-     * @param data The node contents.
-     * @param idx The starting index of this node.
-     */
-    public Node(T data, int idx) {
-        this.size = idx;
         this.data = data;
         this.next = null;
         this.previous = null;

@@ -1,7 +1,5 @@
 package live.paxxit;
 
-import live.paxxit.Node;
-
 /**
  * Our goal is to create a doubly linked list without actually implementing the List interface.
  */
